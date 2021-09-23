@@ -5,7 +5,7 @@ A simple discord.py bot which can do some basic things like
 - Unban a user
 - Mute a user
 - Unmute a user
-- Can all Polls
+- Can create polls
 - Can show user avatar.
 (I will improve this bot by the time)
 
