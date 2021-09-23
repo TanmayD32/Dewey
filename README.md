@@ -14,6 +14,7 @@ HOW TO INSTALL?
 
 1. You have to install latest python verson on your Desktop.
 Link- https://www.python.org/downloads/
+
 Steps to install- https://www.youtube.com/watch?v=uDbDIhR76H4
 
 2. Install Discord.py.
