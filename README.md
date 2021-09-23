@@ -16,7 +16,7 @@ Link- https://www.python.org/downloads/
 Steps to install- https://www.youtube.com/watch?v=uDbDIhR76H4
 
 2. Install Discord.py.
-Step- Go to CMD and type, pip install discord (It will some time)
+Step- Go to CMD and type, pip install discord (It will take some time)
 And you are good to go :)
 
 If you have any questions regarding my bot, feel free to DM me on discord- Tanmay#3877
