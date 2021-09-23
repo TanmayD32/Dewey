@@ -11,7 +11,7 @@ A simple discord.py bot which can do some basic things like
 
 HOW TO INSTALL?
 
-1. You have to install letest python verson on your Desktop.
+1. You have to install latest python verson on your Desktop.
 Link- https://www.python.org/downloads/
 Steps to install- https://www.youtube.com/watch?v=uDbDIhR76H4
 
