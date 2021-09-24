@@ -123,11 +123,15 @@ async def on_command_error(ctx,error): #this will print when a person types a mo
         await ctx.send("Please enter all the required arguments!")
         await ctx.message.delete()
 #-----------------------------------------------------------------------------------[Embeds]---------------------------------------------------------------------------------------------------------------
-@client.command(aliases=['user','info']) #This will give Info of A person.
+@client.command(aliases=['user','info']) #This will give Info of A person. (Updated 1.0)
 @commands.has_permissions(kick_members = True)
 async def whois(ctx, member : discord.Member):
-    embed = discord.Embed(title = member.name , description = member.mention , colour = discord.Colour.red())
-    embed.add_field(name = "ID", value = member.id , inline = True)
+    roles = [role for role in member.roles]
+    embed = discord.Embed(title = member.name , description = member.mention , colour = member.color)
+    embed.add_field(name = "ID", value = member.id , inline = False )
+    embed.add_field(name = "Server Name", value= member.display_name, inline = False)
+    embed.add_field(name=f'Roles ({len(roles)})', value = " " .join([role.mention for role in roles]), inline = False)
+    embed.add_field(name="Is BOT?", value=member.bot, inline = False)
     embed.set_thumbnail(url = member.avatar_url)
     embed.set_footer(text = "Created by Dewey Bot")
     await ctx.send(embed=embed)
@@ -160,6 +164,25 @@ async def addpoll(ctx,*, msg):
     await message_.add_reaction("✅")
     await message_.add_reaction("❎")
     await ctx.message.delete()
+#------------------------------------------------------------------------------------------------[New update- 1.0]------------------------------------------------------------------------------------------------------------------------------------
 
+@client.command(aliases=['role']) #create's a new role
+@commands.has_permissions(manage_roles=True) 
+async def create_role(ctx, *, name):
+	guild = ctx.guild
+	await guild.create_role(name=name)
+	await ctx.send(f'Role `{name}` has been created')
+
+@client.command(aliases=['new_channel', 'channel']) #Create's a new channel
+async def create_channel(ctx, *, name):
+    guild = ctx.message.guild
+    await guild.create_text_channel(f'{name}')
+    await ctx.send(f'channel `{name}` has been created')
+    await ctx.message.delete()
+
+@client.command()
+async def say (ctx, *, say):
+    await ctx.send(f'{ctx.author.mention} `Said:` **{say}**')
+    await ctx.message.delete()
 #-------------------------------------------------------------------------------------------------------[Bot Token]--------------------------------------------------------------------------------------------------
 client.run(token) # Bot token register
