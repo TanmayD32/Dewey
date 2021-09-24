@@ -7,7 +7,8 @@ A simple discord.py Moderator Bot named Dewey, which can do some basic things li
 - Unmute a user
 - Can create polls
 - And much more!
-(I will update this bot by the time) Currently Verson- 0.0
+
+(I will update this bot by the time) 
 
 
 HOW TO INSTALL?
