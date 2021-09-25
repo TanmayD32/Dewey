@@ -22,19 +22,23 @@ async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Dewey")) #bot rich presense (watching)
     print("Dewey is Online on discord!") #Start event of the bot 
 
-@client.command() #about bot (optional)
+@client.command() # about dewey. 
 async def aboutme(ctx):
-    await ctx.send(bot1)
-    await ctx.send(bot2)
-    await ctx.send(bot3)
-    await ctx.send(bot4)
-    await ctx.send(bot5)
-    await ctx.send(bot6)
-    await ctx.send(bot7)
-    await ctx.send(bot8)
-    await ctx.send(bot9)
-    await ctx.send(bot10)
-    await ctx.message.delete()
+        embedVar = discord.Embed(title="Dewey Commands", description=" ", color=0x00ff00)
+        embedVar.add_field(name="aboutme", value="To get information about me", inline=False)
+        embedVar.add_field(name="purge", value="To delete messages", inline=False)
+        embedVar.add_field(name="kick", value="To kick a person", inline=False)
+        embedVar.add_field(name="ban", value="To Ban a person", inline=False)
+        embedVar.add_field(name="mute", value="To mute a person", inline=False)
+        embedVar.add_field(name="unmute", value="To Unmute a person", inline=False)
+        embedVar.add_field(name="avatar", value="To see avatar of guild member", inline=False)
+        embedVar.add_field(name="addpoll", value="To Add new Pool", inline=False)
+        embedVar.add_field(name="whois", value="To get Information about a member", inline=False)
+        embedVar.add_field(name="say", value="To Say somthing", inline=False)
+        embedVar.add_field(name="create_channel", value="To Create a Channel", inline=False)
+        embedVar.add_field(name="create_role", value="To Create a Role", inline=False)
+        await ctx.send(embed=embedVar)
+        await ctx.message.delete()
 
 @client.command()
 async def prefix(ctx):
@@ -53,18 +57,23 @@ async def prefix(ctx):
 @commands.has_permissions(manage_messages = True)
 async def clear(ctx,amount=2):
     await ctx.channel.purge(limit = amount)
+    await ctx.send(f'**{amount}** messages has been deleted')
     await ctx.message.delete()
 
 @client.command()
 @commands.has_permissions(kick_members=True)
 async def kick(ctx, member: discord.Member, *, reason="No reason provided"):
-    await ctx.send(member.name+" Was Kicked from the server: "+reason)
-    await member.kick(reason=reason)
+    embedVar = discord.Embed(title = f':no_entry: `{member.name}` was kicked. '+ reason)
+    await ctx.send(embed=embedVar)
+    # await ctx.send(member.name+" Was Kicked from the server: "+reason)
+    await member.kick(reason=reason
 
 @client.command(aliases=['b']) #ban a member
 @commands.has_permissions(ban_members = True)
 async def ban(ctx,member : discord.Member,*,reason= "No reason provided"):
-    await ctx.send(member.name + " Has been banned from the server: "+reason)
+    embedVar = discord.Embed(title=f":hammer: Ban Hammer has been spoken to `{member.name}` "+ reason)
+    await ctx.send(embed=embedVar)
+    # await ctx.send(member.name + " Has been banned from the server: "+reason)
     await member.send("You have been banned from the server")
     await member.ban(reason=reason)
     await ctx.message.delete()
@@ -81,7 +90,9 @@ async def unban(ctx,*,member):
         if(user.name, user.discriminator)==(member_name,member_disc):
 
             await ctx.guild.unban(user)
-            await ctx.send(member_name +" Was Unbanned from this server!" )
+            # await ctx.send(member_name +" Was Unbanned from this server!" )
+            embedVar = discord.Embed(title= f":white_check_mark: {member_name} Was unbanned.")
+            await ctx.send(embed=embedVar)
             await ctx.message.delete()
             return
     await ctx.send(member+" Was not found!")
@@ -183,6 +194,17 @@ async def create_channel(ctx, *, name):
 @client.command()
 async def say (ctx, *, say):
     await ctx.send(f'{ctx.author.mention} `Said:` **{say}**')
+    await ctx.message.delete()
+		      
+#------------------------------------------------------------------------------------------------[New update- 1.1]------------------------------------------------------------------------------------------------------------------------------------
+	   
+@client.command()
+async def announce(ctx, *, ers):
+    await ctx.send(f'{ctx.guild.default_role}')
+    embedVar = discord.Embed(title=":warning: Announcement", description=f"**{ers}**", color=0x00ff00)
+    # embedVar.add_field(name=f"{ers}", value=None, inline=False)
+    embedVar.set_footer(text=f'Announced By - {ctx.author}')
+    await ctx.send(embed=embedVar)
     await ctx.message.delete()
 #-------------------------------------------------------------------------------------------------------[Bot Token]--------------------------------------------------------------------------------------------------
 client.run(token) # Bot token register
