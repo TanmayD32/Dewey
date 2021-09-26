@@ -3,26 +3,18 @@ from discord.ext import commands
 client = commands.Bot(command_prefix='!')
 token = 'Replace your Bot Token with this text' #Your bot token
 
-# Some variables
-bot1 = "`@` - Bot Prefix"
-
-bot2 = "`aboutme` - To get information about me"
-bot3 = "`purge` - To delete a message"
-bot4 = "`kick` - To kick a dirty member from the server"
-bot5 = "`ban` - To Ban a nerd from the server"
-bot6 = "`unban` - To Unban a member from the server"
-bot7 = "`mute` - To mute a trash talk member"
-bot8 = "`unmute` - To unmute a member"
-bot9 = "`avatar` - To show a member's profile picture"
-bot10 = "`addpoll` To add a poll"
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+@client.command() # You can now set status of the bot from discord. # New update- 1.2
+async def setstatus(ctx,*, msg=' '):
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name=f'{msg}')) 
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Dewey")) #bot rich presense (watching)
+#     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Dewey")) #bot rich presense (watching)
     print("Dewey is Online on discord!") #Start event of the bot 
 
-@client.command() # about dewey. 
+@client.command() # about dewey. (You can remove this event, and can add into a command {@client.command})
 async def aboutme(ctx):
         embedVar = discord.Embed(title="Dewey Commands", description=" ", color=0x00ff00)
         embedVar.add_field(name="aboutme", value="To get information about me", inline=False)
@@ -37,6 +29,9 @@ async def aboutme(ctx):
         embedVar.add_field(name="say", value="To Say somthing", inline=False)
         embedVar.add_field(name="create_channel", value="To Create a Channel", inline=False)
         embedVar.add_field(name="create_role", value="To Create a Role", inline=False)
+        embedVar.add_field(name="setstatus", value="To Set Bot Status On Discord", inline=False)
+        embedVar.add_field(name="announce", value="To Announce A Message", inline=False)
+        embedVar.add_field(name="s", value="To Give Suggestion", inline=False)
         await ctx.send(embed=embedVar)
         await ctx.message.delete()
 
@@ -206,5 +201,23 @@ async def announce(ctx, *, ers):
     embedVar.set_footer(text=f'Announced By - {ctx.author}')
     await ctx.send(embed=embedVar)
     await ctx.message.delete()
+		      
+#------------------------------------------------------------------------------------------------[New update- 1.1]------------------------------------------------------------------------------------------------------------------------------------
+		      
+@client.command() # Announcement command
+async def announce(ctx, *, ers):
+    await ctx.send(f'{ctx.guild.default_role}')
+    embedVar = discord.Embed(title=":warning: Announcement", description=f"**{ers}**", color=0x00ff00)
+    # embedVar.add_field(name=f"{ers}", value=None, inline=False)
+    embedVar.set_footer(text=f'Announced By - {ctx.author}')
+    await ctx.send(embed=embedVar)
+    await ctx.message.delete()
+
+@client.command(aliases=['suggestion']) # Suggestion command
+async def s(ctx,*, message):
+    await ctx.send(f'Your suggestion has been recorded: **{message}**')
+    channel = client.get_channel(890426648556621867) # channel ID which you want to recive member's suggestion
+    embed = discord.Embed(title=f'New suggestion recived from ``{ctx.author}``', description=f'**{message}**', color=0x00ff00)
+    await channel.send(embed=embed)
 #-------------------------------------------------------------------------------------------------------[Bot Token]--------------------------------------------------------------------------------------------------
 client.run(token) # Bot token register
