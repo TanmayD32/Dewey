@@ -1,3 +1,4 @@
+# Dewey Bot 
 A simple discord.py Moderator Bot named Dewey, which can do some basic things like
 - Purge messages
 - Kick a user
