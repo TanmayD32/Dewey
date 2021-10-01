@@ -11,8 +11,12 @@ A simple discord.py Moderator Bot named Dewey, which can do some basic things li
 
 (I will update this bot by the time) 
 
+# Invite Dewey On Your Disocrd Server!
 
-HOW TO INSTALL?
+You can invite my bot on your disord server.
+Invite link: https://discord.com/api/oauth2/authorize?client_id=834049209383649300&permissions=8&scope=bot
+
+# HOW TO INSTALL?
 
 1. You have to install latest python verson on your Desktop.
 Link- https://www.python.org/downloads/
@@ -26,4 +30,4 @@ And you are good to go :)
 Step 2 - Run the bot. Download my Bot code. After downloading it, Right click on that file >> Open With >> Python
 (If you want to edit the code, Right click on that file >> Open With >> {Your text editor})
 
-If you have any questions regarding my bot, feel free to DM me on discord- Tanmay#3877
+# If you have any questions regarding my bot, feel free to DM me on discord- Tanmay#3877
