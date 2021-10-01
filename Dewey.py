@@ -4,14 +4,11 @@ client = commands.Bot(command_prefix='!')
 token = 'Replace your Bot Token with this text' #Your bot token
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-@client.command() # You can now set status of the bot from discord. # New update- 1.2
-async def setstatus(ctx,*, msg=' '):
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name=f'{msg}')) 
+ 
 
 @client.event
 async def on_ready():
-#     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="Dewey")) #bot rich presense (watching)
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="''!aboutme''")) #bot rich presense (watching)
     print("Dewey is Online on discord!") #Start event of the bot 
 
 @client.command() # about dewey. (You can remove this event, and can add into a command {@client.command})
