@@ -1,15 +1,20 @@
 import discord 
 from discord.ext import commands
-client = commands.Bot(command_prefix='!')
-token = 'Replace your Bot Token with this text' #Your bot token
+client = commands.Bot(command_prefix='?')
+token = 'REPLACE YOUR BOT TOKEN WITH THIS TEXT' 
 
+# Some variables
+
+# @client.command()
+# async def setstatus(ctx,*, msg=' '):
+#     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name=f'{msg}'))
+#     await ctx.send(f'Changed Bot Status To: **{msg}**')
 #--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
- 
-
 @client.event
 async def on_ready():
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="''!aboutme''")) #bot rich presense (watching)
-    print("Dewey is Online on discord!") #Start event of the bot 
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="My Developer")) #bot rich presense (listening)
+    print("Dewey is Online on discord!") #console print
+
 
 @client.command() # about dewey. (You can remove this event, and can add into a command {@client.command})
 async def aboutme(ctx):
@@ -31,11 +36,7 @@ async def aboutme(ctx):
         embedVar.add_field(name="s", value="To Give Suggestion", inline=False)
         await ctx.send(embed=embedVar)
         await ctx.message.delete()
-
-@client.command()
-async def prefix(ctx):
-    await ctx.send("`!`")
-
+    
 
 # @client.event() 
 # async def on_member_join(member):
@@ -58,7 +59,7 @@ async def kick(ctx, member: discord.Member, *, reason="No reason provided"):
     embedVar = discord.Embed(title = f':no_entry: `{member.name}` was kicked. '+ reason)
     await ctx.send(embed=embedVar)
     # await ctx.send(member.name+" Was Kicked from the server: "+reason)
-    await member.kick(reason=reason
+    await member.kick(reason=reason)
 
 @client.command(aliases=['b']) #ban a member
 @commands.has_permissions(ban_members = True)
@@ -91,25 +92,54 @@ async def unban(ctx,*,member):
     await ctx.message.delete()
 
 
-@client.command(aliases=['m']) #mute a person
-@commands.has_permissions(kick_members = True)
-async def mute(ctx,member : discord.Member):
-    muted_role = ctx.guild.get_role() #put your role's ID here (Should not be having Permission of Send message in specific channel)
+# @client.command(aliases=['m']) #mute a person
+# # @commands.has_permissions(kick_members = True)
+# async def mute(ctx,member : discord.Member):
+#     muted_role = ctx.guild.get_role(893719706907840532)
 
-    await member.add_roles(muted_role)
+#     await member.add_roles(muted_role)
 
-    await ctx.send(member.mention +" Has been muted!")
-    await ctx.message.delete()
+#     await ctx.send(member.mention +" Has been muted!")
+#     # embed = discord.Embed(title = f'``{member}`` was muted')
+#     # await ctx.send(embed=embed)
+#     await ctx.message.delete()
 
-@client.command(aliases=['unm']) #unmute a person
-@commands.has_permissions(kick_members = True)
-async def unmute(ctx,member : discord.Member):
-    muted_role = ctx.guild.get_role() #put your role's ID here (Should not be having Permission of Send message in specific channel)
+# @client.command(aliases=['unm']) #unmute a person
+# # @commands.has_permissions(kick_members = True)
+# async def unmute(ctx,member : discord.Member):
+#     muted_role = ctx.guild.get_role(893719706907840532)
 
+#     await member.remove_roles(muted_role)
+
+#     await ctx.send(member.mention +" Has been unmuted!")
+#     await ctx.message.delete()
+
+@client.command() # Mute command
+@commands.has_permissions(manage_messages=True)
+async def mute(ctx, member:discord.Member):
+    muted_role = discord.utils.get(ctx.guild.roles, name='muted' or 'Muted' or 'mute' or 'Mute')
+    guild = ctx.guild
+    if muted_role not in guild.roles:
+        perm = discord.permissions(send_messages=False)
+        await guild.create_role('Muted', permissions=perm)
+        await member.add_roles((muted_role))
+        embed = discord.Embed(title = f':mute: ``{member}`` was muted')
+        await ctx.send(embed=embed)
+        await ctx.message.delete()
+    else:
+        await member.add_roles(muted_role)
+        embed = discord.Embed(title = f':mute: ``{member}`` was muted')
+        await ctx.send(embed=embed)
+        await ctx.message.delete()
+
+@client.command() #unmute command
+@commands.has_permissions(manage_messages=True)
+async def unmute(ctx, member:discord.Member):
+    muted_role = discord.utils.get(ctx.guild.roles, name='muted' or 'Muted' or 'mute' or 'Mute')
     await member.remove_roles(muted_role)
-
-    await ctx.send(member.mention +" Has been unmuted!")
-    await ctx.message.delete()
+    embed = discord.Embed(title = f':white_check_mark: ``{member}`` was Unmuted')
+    await ctx.send(embed=embed)  
+    await ctx.message.delete() 
 
 @client.command(aliases=['w']) #warn a person
 @commands.has_permissions(kick_members = True)
@@ -118,15 +148,17 @@ async def warn(ctx,member : discord.Member,*,reason= "No reason provided"):
     await ctx.message.delete()
 #-----------------------------------------------------------------------------------[Error Handleing]------------------------------------------------------------------------------------------------------
 @client.event
-async def on_command_error(ctx,error): #this will print when a person types a mod command but he don't have permi.
+async def on_command_error(ctx, error): #this will print when a person types a mod command but he don't have permi.
     if isinstance(error,commands.MissingPermissions):
-        await ctx.send("You Don't have Permission to do that! ;-;")
+        # await ctx.send("You Don't have Permission to do that! ;-;")
+        embed = discord.Embed(title = f":no_entry: ``{ctx.author}`` Access Denied")
+        await ctx.send(embed=embed)
         await ctx.message.delete()
     if isinstance(error,commands.MissingRequiredArgument): #this will print when you will don't type all args in your command.
         await ctx.send("Please enter all the required arguments!")
         await ctx.message.delete()
 #-----------------------------------------------------------------------------------[Embeds]---------------------------------------------------------------------------------------------------------------
-@client.command(aliases=['user','info']) #This will give Info of A person. (Updated 1.0)
+@client.command(aliases=['user']) #This will give Info of A person. (Updated 1.0)
 @commands.has_permissions(kick_members = True)
 async def whois(ctx, member : discord.Member):
     roles = [role for role in member.roles]
@@ -156,18 +188,18 @@ async def addpoll(ctx,*, msg):
     channel = ctx.channel
     try:
         op1 , op2 = msg.split("or")
-        txt = f"React with ✅ for {op1} and ❎ for {op2}"
+        txt = f'''✅: ``{op1}`` 
+                  ❎: ``{op2}`` '''
     except:
         await channel.send("Correct Syntax: Choice1 or Choise2")
         return
 
-    embed= discord.Embed(title="Today's Poll!", description = txt,colour = discord.Colour.red())
+    embed= discord.Embed(title=f"New Poll", description = txt,colour = discord.Colour.red())
     embed.set_footer(text = "Created by Dewey Bot")
     message_ = await channel.send(embed=embed)
     await message_.add_reaction("✅")
     await message_.add_reaction("❎")
     await ctx.message.delete()
-#------------------------------------------------------------------------------------------------[New update- 1.0]------------------------------------------------------------------------------------------------------------------------------------
 
 @client.command(aliases=['role']) #create's a new role
 @commands.has_permissions(manage_roles=True) 
@@ -185,23 +217,10 @@ async def create_channel(ctx, *, name):
 
 @client.command()
 async def say (ctx, *, say):
-    await ctx.send(f'{ctx.author.mention} `Said:` **{say}**')
+    await ctx.send(f'{ctx.author.mention} Said: **{say}**')
     await ctx.message.delete()
-		      
-#------------------------------------------------------------------------------------------------[New update- 1.1]------------------------------------------------------------------------------------------------------------------------------------
-	   
+
 @client.command()
-async def announce(ctx, *, ers):
-    await ctx.send(f'{ctx.guild.default_role}')
-    embedVar = discord.Embed(title=":warning: Announcement", description=f"**{ers}**", color=0x00ff00)
-    # embedVar.add_field(name=f"{ers}", value=None, inline=False)
-    embedVar.set_footer(text=f'Announced By - {ctx.author}')
-    await ctx.send(embed=embedVar)
-    await ctx.message.delete()
-		      
-#------------------------------------------------------------------------------------------------[New update- 1.2]------------------------------------------------------------------------------------------------------------------------------------
-		      
-@client.command() # Announcement command
 async def announce(ctx, *, ers):
     await ctx.send(f'{ctx.guild.default_role}')
     embedVar = discord.Embed(title=":warning: Announcement", description=f"**{ers}**", color=0x00ff00)
@@ -213,8 +232,10 @@ async def announce(ctx, *, ers):
 @client.command(aliases=['suggestion']) # Suggestion command
 async def s(ctx,*, message):
     await ctx.send(f'Your suggestion has been recorded: **{message}**')
-    channel = client.get_channel(890426648556621867) # channel ID which you want to recive member's suggestion
-    embed = discord.Embed(title=f'New suggestion recived from ``{ctx.author}``', description=f'**{message}**', color=0x00ff00)
+    await ctx.message.delete()
+    channel = client.get_channel(890426648556621867) # You can give suggestions for my bot! THIS IS OFFICIAL CHANNEL ID
+    embed = discord.Embed(title=f'New suggestion recived from ``{ctx.author}``', description=f'{message}', color=0x00ff00)
     await channel.send(embed=embed)
+
 #-------------------------------------------------------------------------------------------------------[Bot Token]--------------------------------------------------------------------------------------------------
-client.run(token) # Bot token register
+client.run(token) # Bot token run
