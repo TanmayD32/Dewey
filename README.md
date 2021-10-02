@@ -11,7 +11,7 @@ A simple discord.py Moderator Bot named Dewey, which can do some basic things li
 
 (I will update this bot by the time) 
 
-# Invite Dewey On Your Disocrd Server!
+# Invite Dewey On Your Discord Server!
 
 You can invite my bot on your disord server.
 Invite link: https://discord.com/api/oauth2/authorize?client_id=834049209383649300&permissions=8&scope=bot
