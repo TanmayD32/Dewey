@@ -6,7 +6,7 @@ A Simple Discord Bot Which Is Made To Moderate Your Discord Server. This Bot Is 
 
 1. You have to install latest python verson on your Desktop.
 Link- https://www.python.org/downloads/
-Steps to install- https://www.youtube.com/watch?v=uDbDIhR76H4
+Steps to install- https://www.youtube.com/watch?v=uDbDIhR76H4 (Not My Video)
 
 2. Install Discord.py.
 Step 1 - Go to CMD and type, pip install discord (It will take some time)
