@@ -11,7 +11,7 @@ token = 'REPLACE YOUR BOT TOKEN WITH THIS TEXT'
 async def on_ready():
     print("Dewey is Online on discord!") #On ready Print
     playsound('path\\ding.mp3') # Paste the music path which you want to use it. eg- C:\\Users\Tanmay\\Desktop\\dewey\\dewey\\main\\ding.mp3. Also don't forgot to use \\ in the path, otherwise it will won't work
-	#You can use my 'ding.mp3' file for startup sound.
+	#You can use my 'ding.mp3' file for startup sound. Provided in the folder
 
 @client.command()
 async def setstatus(ctx,*,status='Dewey'):
