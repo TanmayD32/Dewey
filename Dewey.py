@@ -1,5 +1,6 @@
 import discord 
 from discord.ext import commands
+from playsound import playsound # Use 'pip install playsound'
 
 client = commands.Bot(command_prefix='?')
 client.remove_command('help')
@@ -9,7 +10,8 @@ token = 'REPLACE YOUR BOT TOKEN WITH THIS TEXT'
 @client.event
 async def on_ready():
     print("Dewey is Online on discord!") #On ready Print
-
+    playsound('path\\ding.mp3') # Paste the music path which you want to use it. eg- C:\\Users\Tanmay\\Desktop\\dewey\\dewey\\main\\ding.mp3. Also don't forgot to use \\ in the path, otherwise it will won't work
+	#You can use my 'ding.mp3' file for startup sound.
 
 @client.command()
 async def setstatus(ctx,*,status='Dewey'):
