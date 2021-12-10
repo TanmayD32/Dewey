@@ -53,10 +53,17 @@ async def help(ctx):
 #---------------------------------------------------------------------------------------------------[mod commands]------------------------------------------------------------------------------------------------------------------------------
 @client.command(aliases=['cls','purge']) #purge 
 @commands.has_permissions(manage_messages = True)
-async def clear(ctx,amount=2):
-    await ctx.channel.purge(limit = amount)
+async def clear(ctx,amount=2,):
+    limit1 = 0
+    error_embed = discord.Embed(title = f':x: Unable to purge {amount} Messages', description=f'Too many messages to purge at a same time. Or the message are older than 14 days Which cannot be purged.', color=0x00ff00)
     embedVar = discord.Embed(title = f':white_check_mark: Messages Purged', description=f'**{amount}** Messages Was Purged By User `{ctx.author}`', color=0x00ff00)
-    await ctx.send(embed=embedVar)
+    if amount >= 15:
+        await ctx.channel.purge(limit = limit1)
+        await ctx.send(embed=error_embed)
+        await ctx.message.delete()
+    else:
+        await ctx.channel.purge(limit = amount+1)
+        await ctx.send(embed=embedVar)
 
 @client.command() # kick
 @commands.has_permissions(kick_members=True)
