@@ -1,6 +1,7 @@
 import discord 
 from discord.ext import commands
 from playsound import playsound # Use 'pip install playsound'
+from colors import *
 
 client = commands.Bot(command_prefix='?')
 client.remove_command('help')
@@ -55,7 +56,7 @@ async def help(ctx):
 @commands.has_permissions(manage_messages = True)
 async def clear(ctx,amount=2,):
     limit1 = 0
-    error_embed = discord.Embed(title = f':x: Unable to purge {amount} Messages', description=f'Too many messages to purge at a same time. Or the message are older than 14 days Which cannot be purged.', color=0x00ff00)
+    error_embed = discord.Embed(title = f':x: Unable to purge {amount} Messages', description=f'Too many messages to purge at a same time. Or the message are older than 14 days Which cannot be purged.', color= colors.red)
     embedVar = discord.Embed(title = f':white_check_mark: Messages Purged', description=f'**{amount}** Messages Was Purged By User `{ctx.author}`', color=0x00ff00)
     if amount >= 15:
         await ctx.channel.purge(limit = limit1)
@@ -141,7 +142,7 @@ async def warn(ctx,member : discord.Member,*,reason= "No reason provided"):
 async def on_command_error(ctx, error): 
     if isinstance(error,commands.MissingPermissions):
         await ctx.send("You Don't have Permission to do that! ;-;")
-        embed = discord.Embed(title = f":no_entry: ``{ctx.author}`` Access Denied", color=0x00ff00)
+        embed = discord.Embed(title = f":no_entry: ``{ctx.author}`` Access Denied", color= colors.red)
         await ctx.send(embed=embed)
         await ctx.message.delete()
     if isinstance(error,commands.MissingRequiredArgument): 
@@ -218,13 +219,15 @@ async def announce(ctx, *, msg):
     embedVar.set_footer(text=f'Announced By - {ctx.author}')
     await ctx.send(embed=embedVar)
 
-@client.command(aliases=['suggestion']) # Suggestion command
-async def s(ctx,*, message):
+@client.command(aliases=['s']) # Suggestion command
+async def suggestion(ctx,*, message):
     await ctx.send(f'Your suggestion has been recorded: **{message}**')
-    await ctx.message.delete()
-    channel = client.get_channel(890426648556621867) # Replace your channel ID to recive member's suggestions.
-    embed = discord.Embed(title=f'New suggestion recived from ``{ctx.author}``', description=f'{message}', color=0x00ff00)
+    # await ctx.message.delete()
+    channel = client.get_channel(890426648556621867) # channel ID which you want to recive member's suggestion
+    embed = discord.Embed(title=f'''New suggestion recived from ``{ctx.author}`` 
+Server: ``{ctx.guild}``''', description=f'{message}', color=0x00ff00)
     await channel.send(embed=embed)
+    await ctx.message.delete()
 
 @client.command() # To Send DM 
 @commands.has_permissions(kick_members = True)
