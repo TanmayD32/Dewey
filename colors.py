@@ -1,4 +1,4 @@
-class colors:
+class colors: #Credit to its owner.
     default = 0
     teal = 0x1abc9c
     dark_teal = 0x11806a
