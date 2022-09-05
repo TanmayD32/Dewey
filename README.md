@@ -1,4 +1,4 @@
-# Dewey Bot 
+# Dewey Bot (Version: discord.py-2.0.0)
 A Simple Discord Bot Which Is Made To Moderate Your Discord Server. This Bot Is Made in Discord.py
 (I will update this bot by the time) 
 
